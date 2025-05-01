@@ -1,0 +1,20 @@
+{% extends 'display/base.html' %}
+{% block content %}
+<h2>Welcome {{username}}</h2>
+<p>Current balance is {{balance}}</p>
+
+<div class="flexy">
+<div class="Container">Add Transactions</div>
+<div class="Container">Set Budget</div>
+<div class="Container">Add Categories</div>
+<div class="Container">Reports</div>
+</div>
+{% endblock %}
+
+<style>
+    .Container {
+        width: 75px;
+        background-color: aquamarine;
+
+    }
+</style>

@@ -1,5 +1,6 @@
 from django import forms
-from .models import User
+from .models import User,Category,Transaction
+from django.utils.timezone import now
 
 class userForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -18,3 +19,32 @@ class userForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model=Category
+        fields=['name','setbudget']
+        labels={'name': 'Category Name','setbudget': 'Set Category Budget'}
+        widgets={'name': forms.TextInput(attrs={'class': 'form-control'}),
+                 'setbudget': forms.NumberInput(attrs={'class': 'form-control'})}
+        
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['amount', 'category', 'date']  # include 'date'
+
+        widgets = {
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Amount'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
+
+        labels = {
+            'amount': 'Transaction Amount',
+            'category': 'Category',
+            'date': 'Transaction Date',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['date'].initial = now().date()  # default current date

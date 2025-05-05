@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .forms import userForm, LoginForm
-from .models import User
+from .forms import userForm, LoginForm, CategoryForm, TransactionForm
+from .models import User, Transaction, Category
 from django.contrib import messages
 # Create your views here.
 
@@ -44,3 +44,41 @@ def home_view(request):
     context={'username': user.username, 'balance': user.balance}
     
     return render(request,'display/home.html',context)
+
+    
+def add_categories(request):
+    user = User.objects.get(username=request.session['username'])
+    form=''
+    if request.method=='POST':
+        form=CategoryForm(request.POST)
+        if form.is_valid():
+            category=form.save(commit=False)
+            category.totalspend = 0.00
+            category.userid=user
+            category.save()
+            return redirect('home')
+    else:
+        form=CategoryForm()
+    return render(request, 'display/add_category.html', {'form':form})
+
+
+def add_transactions(request):
+    user = User.objects.get(username=request.session['username'])
+    form=''
+    if request.method=='POST':
+        form= TransactionForm(request.POST)
+        if form.is_valid():
+            transaction=form.save(commit=False)
+            user.balance=user.balance-transaction.amount
+            user.save()
+            transaction.userid=user
+            transaction.save()
+            return redirect('home')
+    else: 
+        form=TransactionForm()
+    return render(request,'display/add_transactions.html',{'form':form})
+
+def report(request):
+    user = User.objects.get(username=request.session['username'])
+    transactions = Transaction.objects.filter(userid=user).order_by('-date')  # Sorted by date descending
+    return render(request, 'display/report.html', {'transactions':transactions} )

@@ -4,10 +4,9 @@
 <p>Current balance is {{balance}}</p>
 
 <div class="flexy">
-<div class="Container">Add Transactions</div>
-<div class="Container">Set Budget</div>
-<div class="Container">Add Categories</div>
-<div class="Container">Reports</div>
+<div class="Container"><a href="{% url 'transaction_create' %}">Add Transactions</a></div>
+<div class="Container"><a href="{% url 'category_create' %}">Add and Set Budget</a></div> 
+<div class="Container"><a href="{% url 'report' %}">Reports</a></div>
 </div>
 {% endblock %}
 

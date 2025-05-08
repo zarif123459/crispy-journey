@@ -1,0 +1,39 @@
+<!-- dashboard/templates/dashboard/users.html -->
+{% extends 'adm/baseA.html' %}
+
+{% block title %}Users Management{% endblock %}
+
+{% block layout %}
+<!-- Override layout block to prevent homepage left/right panels from showing -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Users Management</h2>
+    
+    <!-- Navigation Buttons -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <!-- Registration Button -->
+            <a href="{% url 'userreg' %}" class="nav-button">
+                <div>
+                    <i class="fas fa-user-plus icon"></i>
+                    Register New User
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <!-- User List Button -->
+            <a href="{% url 'userlist' %}" class="nav-button">
+                <div>
+                    <i class="fas fa-users icon"></i>
+                    Existing Users
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

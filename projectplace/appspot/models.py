@@ -21,8 +21,7 @@ class Transaction(models.Model):
     userid = models.ForeignKey(User, to_field='uid', on_delete=models.CASCADE)  # FK for UserPersonal
     category = models.ForeignKey('Category', to_field='catid', on_delete=models.CASCADE)  # FK for Category
     date=models.DateField(default=now)
-
-
+    
     class Meta:
         db_table="Transactions"
 
@@ -33,6 +32,9 @@ class Category(models.Model):
     totalspend=models.IntegerField()
     userid = models.ForeignKey(User, to_field='uid', on_delete=models.CASCADE)  # FK for UserPersonal
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         db_table="Categories"
 

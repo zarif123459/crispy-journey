@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .forms import userForm, LoginForm, CategoryForm, TransactionForm, userFormAdmin
 from .models import User, Transaction, Category
 from django.contrib import messages
+from datetime import datetime
+from django.db.models import Sum
 # Create your views here.
 
 def signup_view(request):
@@ -218,3 +220,30 @@ def categoryedit(request, catid):
     return render(request,"adm/categoryedit.html", {'category' : z})
 
     
+def balance_sheet(request):
+    user = User.objects.get(username=request.session['username'])  # Adjust user fetching logic if needed
+    current_year = datetime.now().year
+
+    # Filter transactions for this user and year
+    yearly_transactions = Transaction.objects.filter(
+        userid=user.uid,
+        date__year=current_year
+    )
+
+    # Calculate income (positive amounts)
+    total_income = yearly_transactions.filter(amount__gt=0).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    # Calculate expenses (negative amounts)
+    total_expense = yearly_transactions.filter(amount__lt=0).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    # Optional: Show absolute value for display
+    total_expense_display = abs(total_expense)
+
+    context = {
+        'year': current_year,
+        'income': total_income,
+        'expense': total_expense_display,
+        'transactions': yearly_transactions.order_by('-date'),
+    }
+
+    return render(request, 'display/balance_sheet.html', context)

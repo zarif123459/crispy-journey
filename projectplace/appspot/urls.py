@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import signup_view,login_view,home_view,add_categories,add_transactions,report,admin_view,admin_users,admin_transactions,admin_categories,insertuser,userreg,userlist,viewtransaction,categoryreg,useredit,updateprofile,deleteprofile,insertcategory,categorylist,categoryedit,updatecategory
+from .views import signup_view,login_view,home_view,add_categories,add_transactions,report,admin_view,admin_users,admin_transactions,admin_categories,insertuser,userreg,userlist,viewtransaction,categoryreg,useredit,updateprofile,deleteprofile,insertcategory,categorylist,categoryedit,updatecategory,balance_sheet
 
 urlpatterns = [
     path('', login_view, name='login'),
@@ -25,6 +25,7 @@ urlpatterns = [
     path('categorylist/', categorylist, name='categorylist'),
     path('insertcategory/', insertcategory, name='insertcategory'),
     path('categoryedit/<int:id>',categoryedit,name= 'categoryedit'),
-    path('updatecategory/<int:id>', updatecategory, name='updatecategory')
+    path('updatecategory/<int:id>', updatecategory, name='updatecategory'),
+    path('balancesheet/',balance_sheet,name="balancesheet" ),
     ]
 

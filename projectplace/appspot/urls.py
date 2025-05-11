@@ -24,8 +24,8 @@ urlpatterns = [
     path('deleteprofile/<int:uid>', deleteprofile, name='deleteprofile'),
     path('categorylist/', categorylist, name='categorylist'),
     path('insertcategory/', insertcategory, name='insertcategory'),
-    path('categoryedit/<int:id>',categoryedit,name= 'categoryedit'),
-    path('updatecategory/<int:id>', updatecategory, name='updatecategory'),
+    path('categoryedit/<int:catid>',categoryedit,name= 'categoryedit'),
+    path('updatecategory/<int:catid>', updatecategory, name='updatecategory'),
     path('balancesheet/',balance_sheet,name="balancesheet" ),
     ]
 

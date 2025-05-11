@@ -202,10 +202,10 @@ def updatecategory(request, catid):
     if request.method=='POST':
         try:
             cat=Category.objects.get(catid=catid)
-            cat.name= request.POST['cname']
-            cat.setbudget = request.POST['cset_budget']
-            cat.totalspend = request.POST['cspend']
-            cat.userid = request.POST['cusername']
+            cat.name= request.POST['name']
+            cat.setbudget = request.POST['setbudget']
+            cat.totalspend = request.POST['totalspend']
+            cat.userid = request.POST['userid']
             cat.save()
             return redirect('/categorylist')
         

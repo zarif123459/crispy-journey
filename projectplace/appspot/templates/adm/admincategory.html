@@ -1,2 +1,37 @@
 {% extends 'adm/baseA.html' %}
 {% block title %} Category Page {% endblock %}
+
+{% block layout %}
+<!-- Override layout block to prevent homepage left/right panels from showing -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Category Management</h2>
+    
+    <!-- Navigation Buttons -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <!-- Registration Button -->
+            <a href="{% url 'categoryreg' %}" class="nav-button">
+                <div>
+                    <i class="fas fa-user-plus icon"></i>
+                    Register New Category
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <!-- User List Button -->
+            <a href="{% url 'categorylist' %}" class="nav-button">
+                <div>
+                    <i class="fas fa-tag icon"></i>
+                    Current Category
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

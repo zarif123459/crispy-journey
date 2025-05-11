@@ -11,8 +11,11 @@ class User(models.Model):
     password=models.CharField(max_length=64)
     balance=models.IntegerField()
     role=models.CharField(max_length=64)
+    def __str__(self):
+        return self.username
     class Meta:
         db_table = "Users"
+    
 
 
 class Transaction(models.Model):

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import userForm, LoginForm, CategoryForm, TransactionForm
+from .forms import userForm, LoginForm, CategoryForm, TransactionForm, userFormAdmin
 from .models import User, Transaction, Category
 from django.contrib import messages
 # Create your views here.
@@ -45,7 +45,6 @@ def home_view(request):
     
     return render(request,'display/home.html',context)
 
-    
 def add_categories(request):
     user = User.objects.get(username=request.session['username'])
     form=''
@@ -60,7 +59,6 @@ def add_categories(request):
     else:
         form=CategoryForm()
     return render(request, 'display/add_category.html', {'form':form})
-
 
 def add_transactions(request):
     user = User.objects.get(username=request.session['username'])
@@ -91,7 +89,8 @@ def admin_users(request):
     return render(request, 'adm/adminusers.html', {'users': users})
 
 def admin_transactions(request):
-    return render(request, 'adm/admintransaction.html')
+    transaction = Transaction.objects.all()
+    return render(request, "adm/admintransaction.html", {'transactiondata' : transaction})
 
 def admin_categories(request):
     return render(request, 'adm/admincategory.html')
@@ -125,13 +124,12 @@ def insertuser(request):
             user=User(first=vfirst, last=vlast, username=vusername, email=vemail, password=vpassword, balance=vbalance, role=vrole) 
             user.save()
             messages.success(request, 'User registered successfully!')
-            return redirect('dashboard-users')
+            return redirect('admin-users')
             
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
             return redirect('userreg')
-    
-    return redirect('userreg')
+     
 
 def userreg(request):
     return render(request, 'adm/userreg.html')
@@ -141,9 +139,6 @@ def deleteprofile(request, id):
     x.delete()
     return redirect("/userlist")
 
-def useredit(request, id):
-    y = User.objects.get(id=id)
-    return render(request,"dashboard/useredit.html", {'user':y})
 
 def viewtransaction(request):
     transaction = Transaction.objects.all()
@@ -153,13 +148,18 @@ def viewtransaction(request):
 def categoryreg(request):
     return render(request, 'adm/categoryreg.html', {}) 
 
-def updateprofile(request, id):
+def updateprofile(request, uid):
     if request.method=='POST':
         try:
-            user=User.objects.get(uid=id)
+            user=User.objects.get(uid=uid)
+            user.first = request.POST['first']
+            user.last = request.POST['last']
             user.username = request.POST['username']
             user.email = request.POST['email']
-            user.password = request.POST['password']
+            new_password = request.POST['password']
+            if new_password:
+                user.password = new_password
+            user.balance = request.POST['balance']
             user.save()
             messages.success(request, 'Successfully Updated')
             return redirect('/userlist')
@@ -171,3 +171,50 @@ def updateprofile(request, id):
             return redirect('/userlist')
         
     return redirect('/userlist')
+
+def useredit(request, id):
+    y = User.objects.get(uid=id)
+    return render(request,"adm/useredit.html", {'user':y})
+
+def insertcategory(request):
+    if request.method == 'POST':
+        vcname = request.POST[ 'cname' ]
+        vcset_budget = request.POST[ 'cset_budget']
+        vcspend = request.POST[ 'cspend' ]
+        vcusername = request.POST[ 'cusername' ]
+        if Category.objects.filter(userid=vcname).exists():
+            messages.error(request, 'Category with this Name already exists!')
+            return redirect('categoryreg')
+        
+        cat=Category(name=vcname, setbudget=vcset_budget, totalspend=vcspend, userid=vcusername)
+        cat.save()
+        messages.success(request, 'Category registered successfully!')
+        return redirect('dashboard-category')
+
+
+def categorylist(request):
+    cat=Category.objects.all()
+    return render(request, 'adm/categorylist.html', {'category':cat})
+
+def updatecategory(request, catid):
+    if request.method=='POST':
+        try:
+            cat=Category.objects.get(catid=catid)
+            cat.name= request.POST['cname']
+            cat.setbudget = request.POST['cset_budget']
+            cat.totalspend = request.POST['cspend']
+            cat.userid = request.POST['cusername']
+            cat.save()
+            return redirect('/categorylist')
+        
+        except Category.DoesNotExist:
+            messages.error('Category not found')
+            return redirect(request, '/categorylist')
+            
+    return redirect('/categorylist')
+
+def categoryedit(request, catid):
+    z = Category.objects.get(catid=catid)
+    return render(request,"adm/categoryedit.html", {'category' : z})
+
+    

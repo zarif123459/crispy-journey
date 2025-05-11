@@ -3,18 +3,32 @@ from .models import User,Category,Transaction
 from django.utils.timezone import now
 
 class userForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': '****',
+            'class': 'form-control'
+        })
+    )
+
     class Meta:
         model = User
-        fields = ['first','last','username','email','password','balance']
-        labels = {'first': 'First Name','last': 'Last Name','username':'Username','email': 'Email','password':'Password','balance':'Balance'}
-        widgets={'first': forms.TextInput(attrs={'placeholder':'John', 'class':'form-control'}),
-                 'last': forms.TextInput(attrs={'placeholder':'Appleseed', 'class':'form-control'}),
-                 'username': forms.TextInput(attrs={'placeholder':'johnseeda', 'class':'form-control'}),
-                 'email': forms.TextInput(attrs={'placeholder':'John@gmail.com', 'class':'form-control'}),
-                 'password': forms.TextInput(attrs={'placeholder':'****', 'class':'form-control'}),
-                 'balance': forms.NumberInput(attrs={'placeholder':'1000', 'class':'form-control'})
-                 }
+        fields = ['first', 'last', 'username', 'email', 'password', 'balance']
+        labels = {
+            'first': 'First Name',
+            'last': 'Last Name',
+            'username': 'Username',
+            'email': 'Email',
+            'password': 'Password',
+            'balance': 'Balance'
+        }
+        widgets = {
+            'first': forms.TextInput(attrs={'placeholder': 'John', 'class': 'form-control'}),
+            'last': forms.TextInput(attrs={'placeholder': 'Appleseed', 'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'placeholder': 'johnseeda', 'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'placeholder': 'John@gmail.com', 'class': 'form-control'}),
+            'balance': forms.NumberInput(attrs={'placeholder': '1000', 'class': 'form-control'})
+        }
+
         
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -60,3 +74,32 @@ class TransactionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['date'].initial = now().date()  # default current date
+
+class userFormAdmin(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': '****',
+            'class': 'form-control'
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ['first', 'last', 'username', 'email', 'password', 'balance','role']
+        labels = {
+            'first': 'First Name',
+            'last': 'Last Name',
+            'username': 'Username',
+            'email': 'Email',
+            'password': 'Password',
+            'balance': 'Balance',
+            'role': 'Role'
+        }
+        widgets = {
+            'first': forms.TextInput(attrs={'placeholder': 'John', 'class': 'form-control'}),
+            'last': forms.TextInput(attrs={'placeholder': 'Appleseed', 'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'placeholder': 'johnseeda', 'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'placeholder': 'John@gmail.com', 'class': 'form-control'}),
+            'balance': forms.NumberInput(attrs={'placeholder': '1000', 'class': 'form-control'}),
+            'role': forms.TextInput(attrs={'placeholder': 'personal', 'class': 'form-control'}),
+        }

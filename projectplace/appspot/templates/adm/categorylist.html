@@ -1,0 +1,152 @@
+{% extends 'adm/baseA.html' %}
+
+{% block title %}Category List{% endblock %}
+
+{% block layout %}
+<!-- Override layout block to prevent homepage left/right panels from showing -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2 class="d-flex align-items-center justify-content-center">
+                <span class="arrow-icon me-3">→</span>
+                <span class="comparison-title">CATEGORY MANAGEMENT</span>
+            </h2>
+            <p class="text-muted">Category administration and access control</p>
+        </div>
+    </div>
+
+    <!-- Search Bar-->
+
+    
+
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr class="table-header">
+                    <th>Category ID</th>
+                    <th>Category Name:</th>
+                    <th>Budget Set</th>
+                    <th>Total Spend</th>
+                    <th>DELETE</th>
+                    <th>EDIT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in category %}
+                <tr>
+                    <td>{{ x.catid }}</td>
+                    <td>{{ x.name }}</td>
+                    <td>{{ x.totalspend }}</td>
+                    <td>{{ x.userid }}</td>
+                    <td>
+                        <a href="/deleteprofile/{{ x.catid }}" class="action-link delete">Delete</a>
+                    </td>
+                    <td>
+                        <a href="/categoryedit/{{ x.catid }}" class="action-link edit">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .arrow-icon {
+        color: #c25e3f;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .comparison-title {
+        color: #c25e3f;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+    
+    .custom-table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .custom-table th, .custom-table td {
+        padding: 15px;
+        text-align: left;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .table-header {
+        background-color: #c25e3f;
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .custom-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    .action-link {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .action-link.edit {
+        color: #c25e3f;
+        border: 1px solid #c25e3f;
+    }
+    
+    .action-link.edit:hover {
+        background-color: #c25e3f;
+        color: white;
+    }
+    
+    .action-link.delete {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+    
+    .action-link.delete:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .search-container {
+        margin-bottom: 30px;
+    }
+
+    .input-group {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .form-control:focus {
+        border-color: #c25e3f;
+        box-shadow: 0 0 0 0.25rem rgba(194, 94, 63, 0.25);
+    }
+
+    .btn-outline-secondary {
+        border-color: #ced4da;
+        color: #6c757d;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #c25e3f;
+        border-color: #c25e3f;
+        color: white;
+    }
+</style>
+{% endblock %}

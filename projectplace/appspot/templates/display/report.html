@@ -5,9 +5,9 @@
 {% block content %}
 <h2>Transaction Report</h2>
 
-<table class="table table-bordered">
+<div class="table-responsive"><table class="table custom-table">
     <thead>
-        <tr>
+        <tr class="table-header">
             <th>Transaction ID</th>
             <th>Amount</th>
             <th>Category</th>
@@ -29,5 +29,6 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import signup_view,login_view,home_view,add_categories,add_transactions,report,admin_view,admin_users,admin_transactions,admin_categories,insertuser,userreg,userlist,viewtransaction,categoryreg
+from .views import signup_view,login_view,home_view,add_categories,add_transactions,report,admin_view,admin_users,admin_transactions,admin_categories,insertuser,userreg,userlist,viewtransaction,categoryreg,useredit,updateprofile,deleteprofile,insertcategory,categorylist,categoryedit,updatecategory
 
 urlpatterns = [
     path('', login_view, name='login'),
@@ -18,5 +18,13 @@ urlpatterns = [
     path('userlist/', userlist, name='userlist'),
     path('viewtransaction/', viewtransaction, name='dashboard-transaction'),
     path('categoryreg/', categoryreg, name='categoryreg'),
+    path('useredit/<int:id>', useredit, name='useredit'),
+    path('categoryreg/', categoryreg, name='categoryreg' ),
+    path('updateprofile/<int:uid>', updateprofile, name='updateprofile'),
+    path('deleteprofile/<int:uid>', deleteprofile, name='deleteprofile'),
+    path('categorylist/', categorylist, name='categorylist'),
+    path('insertcategory/', insertcategory, name='insertcategory'),
+    path('categoryedit/<int:id>',categoryedit,name= 'categoryedit'),
+    path('updatecategory/<int:id>', updatecategory, name='updatecategory')
     ]
 

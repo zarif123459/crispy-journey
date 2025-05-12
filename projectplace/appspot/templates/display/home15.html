@@ -1,0 +1,215 @@
+{% extends 'display/base.html' %}
+
+{% block title %}Finance Tracker - Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Income & Spending</h2>
+        <i class="fas fa-ellipsis-h more"></i>
+    </div>
+    
+    <div style="display: flex; gap: 20px;">
+        <span class="amount positive">+ ${% firstof income "5,000" %}</span>
+        <span class="amount negative">- ${% firstof expenses "2,000" %}</span>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Transaction</h2>
+        <i class="fas fa-ellipsis-h more"></i>
+    </div>
+    
+    <div class="transaction-list">
+        {% if transactions %}
+            {% for transaction in transactions %}
+                <div class="transaction-item">
+                    <div class="transaction-left">
+                        <div class="transaction-icon">
+                            <i class="fas fa-{% if transaction.type == 'income' %}arrow-down{% elif transaction.type == 'expense' %}arrow-up{% else %}exchange-alt{% endif %}"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h3>{{ transaction.description }}</h3>
+                            <p>{{ transaction.date }}</p>
+                        </div>
+                    </div>
+                    <div class="transaction-right">
+                        <div class="amount {% if transaction.type == 'income' %}positive{% elif transaction.type == 'expense' %}negative{% endif %}">
+                            {% if transaction.type == 'income' %}+{% elif transaction.type == 'expense' %}-{% endif %} ${{ transaction.amount }}
+                        </div>
+                        <div class="transaction-status">Success</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Default transactions when no data is available -->
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h3>Hospital</h3>
+                        <p>Yesterday, 2:00 PM</p>
+                    </div>
+                </div>
+                <div class="transaction-right">
+                    <div class="amount negative">- $1,900</div>
+                    <div class="transaction-status">Success</div>
+                </div>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h3>Salary</h3>
+                        <p>Yesterday, 10:00 AM</p>
+                    </div>
+                </div>
+                <div class="transaction-right">
+                    <div class="amount positive">+ $2,000</div>
+                    <div class="transaction-status">Success</div>
+                </div>
+            </div>
+            
+            <div class="transaction-item">
+                <div class="transaction-left">
+                    <div class="transaction-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h3>Subscription</h3>
+                        <p>1 Month Ago, 4:00 PM</p>
+                    </div>
+                </div>
+                <div class="transaction-right">
+                    <div class="amount negative">- $200</div>
+                    <div class="transaction-status">Success</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+    <div class="card credit-card">
+        <h2>Debit</h2>
+        <div class="card-copy">
+            <i class="fas fa-copy"></i>
+        </div>
+        <div class="card-number">123-456-7890</div>
+        <div class="card-balance">${% firstof balance "3,000" %}</div>
+        <div class="card-details">
+            <div>
+                <div class="label">Expired Date</div>
+                <div>March 4th, 2024</div>
+            </div>
+            <div>
+                <div class="label">Card Type</div>
+                <div>Master Card</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2>Card Info</h2>
+            <i class="fas fa-ellipsis-h more"></i>
+        </div>
+        
+        <table class="card-info-table">
+            <tr>
+                <td>Card Number</td>
+                <td>123-456-7890</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ username }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>Active</td>
+            </tr>
+            <tr>
+                <td>Balance</td>
+                <td>${% firstof balance "3,000.00" %}</td>
+            </tr>
+            <tr>
+                <td>Expired Date</td>
+                <td>March 24th, 2024</td>
+            </tr>
+            <tr>
+                <td>Type Card</td>
+                <td>Master Card</td>
+            </tr>
+            <tr>
+                <td>Bank</td>
+                <td>Finance Tracker Bank</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 25px;">
+    <div class="card-header">
+        <h2>Saved Contact</h2>
+        <i class="fas fa-ellipsis-h more"></i>
+    </div>
+    
+    <div class="contacts">
+        {% if contacts %}
+            {% for contact in contacts %}
+                <div class="contact">
+                    <div class="contact-avatar">{{ contact.name|slice:":1" }}</div>
+                    <p>{{ contact.name }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Default contacts when no data is available -->
+            <div class="contact">
+                <div class="contact-avatar">A</div>
+                <p>Alfredo</p>
+            </div>
+            <div class="contact">
+                <div class="contact-avatar">C</div>
+                <p>Claudia</p>
+            </div>
+            <div class="contact">
+                <div class="contact-avatar">M</div>
+                <p>Mariana</p>
+            </div>
+            <div class="contact">
+                <div class="contact-avatar">T</div>
+                <p>Teddy</p>
+            </div>
+            <div class="contact">
+                <div class="contact-avatar">Y</div>
+                <p>Yael</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<button class="add-card-btn" style="margin-top: 25px;">
+    Add New Card
+</button>
+
+<div style="display: flex; justify-content: space-between; margin-top: 25px;">
+    <a href="{% url 'transaction_create' %}" class="nav-item" style="flex: 1; margin-right: 10px; justify-content: center; text-decoration: none;">
+        <i class="fas fa-plus-circle" style="margin-right: 10px;"></i>
+        <span>Add Transactions</span>
+    </a>
+    <a href="{% url 'category_create' %}" class="nav-item" style="flex: 1; margin-right: 10px; justify-content: center; text-decoration: none;">
+        <i class="fas fa-tags" style="margin-right: 10px;"></i>
+        <span>Add and Set Budget</span>
+    </a>
+    <a href="{% url 'report' %}" class="nav-item" style="flex: 1; justify-content: center; text-decoration: none;">
+        <i class="fas fa-chart-pie" style="margin-right: 10px;"></i>
+        <span>Reports</span>
+    </a>
+</div>
+{% endblock %}

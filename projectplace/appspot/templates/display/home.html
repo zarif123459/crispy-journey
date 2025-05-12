@@ -1,0 +1,26 @@
+{% extends 'display/base.html' %}
+{% block content %}
+<h1>Finance Tracker</h1>
+
+<div class="balance-card">
+    <h2 style="color: var(--white);">Welcome {{username}}</h2>
+    <p style="color: var(--white);">Current balance is {{balance}}</p>
+</div>
+
+<div class="card-container">
+    <div class="feature-card">
+        <div class="tag">#one</div>
+        <a href="{% url 'transaction_create' %}">Add Transactions</a>
+    </div>
+    
+    <div class="feature-card">
+        <div class="tag">#two</div>
+        <a href="{% url 'category_create' %}">Add and Set Budget</a>
+    </div> 
+    
+    <div class="feature-card">
+        <div class="tag">#three</div>
+        <a href="{% url 'report' %}">Reports</a>
+    </div>
+</div>
+{% endblock %}

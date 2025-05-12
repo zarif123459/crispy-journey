@@ -1,0 +1,69 @@
+{% extends 'adm/baseA.html' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block layout %}
+<!-- Override layout block to prevent homepage left/right panels from showing -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Edit User</h2>
+    
+    <form method="post" action="{% url 'updateprofile' user.uid %}" class="bg-white p-4 rounded shadow-sm">
+
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="first">First Name: </label>
+            <input type="text" class="form-control" id="first" name="first" 
+                   value="{{ user.first }}" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+
+        <div class="form-group">
+            <label for="last">Last Name: </label>
+            <input type="text" class="form-control" id="last" name="last" 
+                   value="{{ user.last }}" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" 
+                   value="{{ user.username }}" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" 
+                   value="{{ user.email }}" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+        
+        <!-- Password field (optional for editing) -->
+        <div class="form-group">
+            <label for="password">New Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+            <small class="form-text text-muted">Leave blank to keep current password</small>
+        </div>
+
+        <div class="form-group">
+            <label for="balance">Balance</label>
+            <input type="number" class="form-control" id="balance" name="balance" 
+                   value="{{ user.balance }}" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'admin-users' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Users
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

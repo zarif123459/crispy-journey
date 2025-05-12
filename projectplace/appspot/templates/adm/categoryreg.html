@@ -1,0 +1,81 @@
+{% extends 'adm/baseA.html' %}
+
+{% block title %}Category Insertion{% endblock %}
+
+{% block layout %}
+<!-- Override layout block to prevent homepage left/right panels from showing -->
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Category Insertion</h2>
+    
+    <form method="post" action="{% url 'insertcategory' %}" class="bg-white p-4 rounded shadow-sm">
+        {% csrf_token %}
+        
+        <!-- Removed User ID field -->
+        
+        <div class="form-group">
+            <label for="cname">Category Name</label>
+            <input type="text" class="form-control" id="cname" name="cname" required>
+            <small class="form-text text-muted">Must be unique</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="cset_budget">Set Budget</label>
+            <input type="cset_budget" class="form-control" id="cset_budget" name="cset_budget" required>
+            <small class="form-text text-muted">Must be Positive</small>
+        </div>
+        
+        <!-- Added Password field -->
+        <div class="form-group">
+            <label for="cspend">Already Spent</label>
+            <input type="cspend" class="form-control" id="cspend" name="cspend" required>
+            <small class="form-text text-muted">Must be Positive</small>
+        </div>
+        
+        <div class="form-group">
+          <label for="cusername">User Name</label>
+          <input type="cusername" class="form-control" id="cusername" name="cusername" required>
+          <small class="form-text text-muted">Give the User's Name</small>
+      </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'admin-categories' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Category
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Insert Category
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+  <form name="register" method="post" action="insertcategory">
+        {% csrf_token %}
+    
+    <pre>
+        
+     Category Name          :   <input type="text" name="tcname" value="" width="200" ><br>
+     Set budget     :   <input type="text" name="tset_budget" value="" width="200" ><br>
+     Total spend    :   <input type="text" name="tspend" value="" width="200" ><br>
+     Username       :   <input type="text" name="tusername" value="" width="200"><br>
+      
+       <input type="submit" name="reg" value="Click to register" width="300" height="100">
+
+    </pre>
+  </form>
+</center>
+
+
+</body>
+</html>

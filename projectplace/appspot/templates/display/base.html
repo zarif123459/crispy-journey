@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Finance Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'appspot/styles.css' %}">
+    <style>
+        :root {
+            --dark-purple: #1a0933;
+            --medium-purple: #2d1154;
+            --light-purple: #9d8ec7;
+            --white: #ffffff;
+        }
+        
+        body {
+            background-color: var(--dark-purple);
+            color: var(--white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6, p, span {
+            color: var(--white);
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--light-purple);
+            text-decoration: none;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .balance-card {
+            background-color: var(--medium-purple);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .balance-card h2, 
+        .balance-card p {
+            color: var(--white);
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background-color: var(--medium-purple);
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .feature-card a:hover {
+            color: var(--light-purple);
+            text-decoration: none;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: var(--light-purple);
+            color: var(--dark-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="navbar">
+            <div class="brand">Finance Tracker</div>
+            <div class="nav-actions">
+                <a href="{% url 'admin-home' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+                <form method="POST" action="{% url 'logout' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link" style="background: none; border: none; padding: 0; color: inherit; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
